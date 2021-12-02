@@ -1,6 +1,6 @@
 import io
 
-input = "Python\Dec2nd\input"   # "Python\Dec2nd\sample"
+input = "Python\Dec2nd\input.txt"   # "Python\Dec2nd\sample.txt"
 with open(input) as f:
     lines = f.readlines()
 
