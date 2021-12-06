@@ -15,13 +15,25 @@ namespace AdventOfCode2021
         }
 
         public int PredictSwarmSize(List<int> fish, int days)
-        {
-            Fish = fish;
+        {            
             for (int i = 0; i < days; i++)
             {
-
+                for (int fishCounter = 0; fishCounter < fish.Count; fishCounter++)
+                {
+                    var actualFish = fish[fishCounter];
+                    if (actualFish == 0)
+                    {                        
+                        fish[fishCounter] = 6;
+                        fish.Add(9);
+                    }
+                    else
+                    {
+                        fish[fishCounter]--;
+                    }
+                }
+                //Console.WriteLine(string.Join(",", fish));
             }
-            return 1;
+            return fish.Count;
         }
     }
 }
