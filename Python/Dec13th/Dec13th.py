@@ -1,3 +1,7 @@
+from matplotlib import colors
+import numpy as np
+import matplotlib.pyplot as plt
+
 sampleInput = "Python\Dec13th\sample.txt"
 puzzleInput = "Python\Dec13th\input.txt"
 
@@ -41,30 +45,48 @@ def fold(coords, direction, value):
         x = int(actual[0])
         y = int(actual[1])
 
-        if direction=='y':
-            if y > value:
+        if direction == 'y':
+            if y >= value:
                 y = y - 2*(y-value)
-        if direction=='x':
-            if x > value:
+        if direction == 'x':
+            if x >= value:
                 x = x - 2*(x-value)
-        if [x,y] in newCoords:
+        if [x, y] in newCoords:
             # do nothing
-            i=1
+            i = 1
         else:
             newCoords.append([x, y])
 
     return newCoords
 
 
-
 ##################################
-
 coords, instructions = readInputData(puzzle)
 print(coords, len(coords))
 print(instructions)
 
-folded = fold(coords, instructions[0][0], instructions[0][1])
+plt.scatter(*zip(*coords))
+beforfolded = coords
 
-print(folded, len(folded))
+counter = 0
+for instruction in instructions:
+    direction = instruction[0]
+    amount = instruction[1]
+    print(direction, amount)
 
-print('part1: ', len(folded))
+    if counter != 0:
+        beforfolded = folded
+    folded = fold(coords, direction, amount)
+    
+    if direction == 'y':
+        plt.axhline(y=amount, linestyle='-', label=counter)
+    if direction == 'x':
+        plt.axvline(x=amount, linestyle='-', label=counter)
+
+    plt.scatter(*zip(*beforfolded))
+    plt.scatter(*zip(*folded))
+    
+    counter = counter+1
+    plt.show()
+
+plt.show()
