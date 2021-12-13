@@ -8,7 +8,7 @@ with open(puzzleInput) as f:
     puzzle = f.readlines()
 
 
-def solveSample(myInput):
+def readInputData(myInput):
     lines = list(myInput)
     coords = []
     instructions = []
@@ -19,9 +19,7 @@ def solveSample(myInput):
             continue
 
         if ',' in coord:
-            xy = coord.strip().split(',')
-            x = int(xy[0])
-            y = int(xy[1])
+            x, y = getCoord(coord)
             coords.append([x, y])
 
         if 'fold' in coord:
@@ -34,6 +32,30 @@ def solveSample(myInput):
 
     return coords, instructions
 
+def getCoord(coord):
+    xy = coord.strip().split(',')
+    x = int(xy[0])
+    y = int(xy[1])
+    return x,y
+
+
+def fold(coords, direction, value):
+    newCoords = []
+    for actual in coords:
+        x, y = getCoord(actual)
+        if direction=='y':
+            if y > value:
+                y = y - (value - y)
+        if direction=='x':
+            if x > value:
+                x = x - (value - x)
+        if 1==1:
+            newCoords.append([x, y])
+
+    return newCoords
+
+
+
 ##################################
 
-print(solveSample(sample))
+print(readInputData(sample))
