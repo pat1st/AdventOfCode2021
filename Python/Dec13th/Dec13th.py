@@ -19,7 +19,9 @@ def readInputData(myInput):
             continue
 
         if ',' in coord:
-            x, y = getCoord(coord)
+            xy = coord.strip().split(',')
+            x = int(xy[0])
+            y = int(xy[1])
             coords.append([x, y])
 
         if 'fold' in coord:
@@ -32,24 +34,23 @@ def readInputData(myInput):
 
     return coords, instructions
 
-def getCoord(coord):
-    xy = coord.strip().split(',')
-    x = int(xy[0])
-    y = int(xy[1])
-    return x,y
-
 
 def fold(coords, direction, value):
     newCoords = []
     for actual in coords:
-        x, y = getCoord(actual)
+        x = int(actual[0])
+        y = int(actual[1])
+
         if direction=='y':
             if y > value:
-                y = y - (value - y)
+                y = y - 2*(y-value)
         if direction=='x':
             if x > value:
-                x = x - (value - x)
-        if 1==1:
+                x = x - 2*(x-value)
+        if [x,y] in newCoords:
+            # do nothing
+            i=1
+        else:
             newCoords.append([x, y])
 
     return newCoords
@@ -58,4 +59,12 @@ def fold(coords, direction, value):
 
 ##################################
 
-print(readInputData(sample))
+coords, instructions = readInputData(puzzle)
+print(coords, len(coords))
+print(instructions)
+
+folded = fold(coords, instructions[0][0], instructions[0][1])
+
+print(folded, len(folded))
+
+print('part1: ', len(folded))
