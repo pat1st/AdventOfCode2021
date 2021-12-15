@@ -4,12 +4,16 @@ import matplotlib.pyplot as plt
 
 sampleInput = "Python\Dec13th\sample.txt"
 puzzleInput = "Python\Dec13th\input.txt"
+pspInput = "Python\Dec13th\PSP.txt"
 
 with open(sampleInput) as f:
     sample = f.readlines()
 
 with open(puzzleInput) as f:
     puzzle = f.readlines()
+
+with open(pspInput) as f:
+    psp = f.readlines()
 
 
 def readInputData(myInput):
@@ -46,16 +50,18 @@ def fold(coords, direction, value):
         y = int(actual[1])
 
         if direction == 'y':
-            if y >= value:
+            if y > value:
                 y = y - 2*(y-value)
         if direction == 'x':
-            if x >= value:
+            if x > value:
                 x = x - 2*(x-value)
         if [x, y] in newCoords:
             # do nothing
             i = 1
         else:
             newCoords.append([x, y])
+            #print('coords:', coords)
+            #print('new coords:', newCoords)
 
     return newCoords
 
@@ -65,7 +71,7 @@ coords, instructions = readInputData(puzzle)
 print(coords, len(coords))
 print(instructions)
 
-plt.scatter(*zip(*coords))
+#plt.scatter(*zip(*coords))
 beforfolded = coords
 
 counter = 0
@@ -77,16 +83,21 @@ for instruction in instructions:
     if counter != 0:
         beforfolded = folded
     folded = fold(coords, direction, amount)
-    
-    if direction == 'y':
-        plt.axhline(y=amount, linestyle='-', label=counter)
-    if direction == 'x':
-        plt.axvline(x=amount, linestyle='-', label=counter)
 
-    plt.scatter(*zip(*beforfolded))
-    plt.scatter(*zip(*folded))
-    
+    #plt.axhline(y=0, linestyle='-', color='grey')
+    #plt.axvline(x=0, linestyle='-', color='grey')
+
+    #if direction == 'y':
+       # plt.axhline(y=amount, linestyle='-', label=counter)
+    #if direction == 'x':
+        #plt.axvline(x=amount, linestyle='-', label=counter)
+
+    #plt.scatter(*zip(*beforfolded))
+    #plt.scatter(*zip(*folded))
+
+    coords = folded
     counter = counter+1
-    plt.show()
+    #plt.show()
 
+plt.scatter(*zip(*coords))
 plt.show()

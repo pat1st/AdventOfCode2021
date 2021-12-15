@@ -1,0 +1,4 @@
+10,10
+
+fold along y=5
+fold along x=5
