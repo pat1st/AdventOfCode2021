@@ -10,7 +10,9 @@ ty1 = -10
 ty2 = -5
 
 vx = 6
-vy = 3
+vy = 9
+
+maxy = 0
 
 px = 0
 py = 0
@@ -24,6 +26,23 @@ def checkIfTargetReached():
             print(tx1, px, tx2, ty1, py, ty2)
             return True
     return False
+
+
+def getHigherValue(a, b):
+    return a if abs(a) > abs(b) else b
+
+
+def checkIfBeyondTarget():
+    if px > getHigherValue(tx1, tx2):
+        #if py < getHigherValue(ty1, ty2):
+            print(tx1, px, tx2, ty1, py, ty2)
+            return True
+    if py < getHigherValue(ty1, ty2):
+        #if px > getHigherValue(tx1, tx2):
+            print(tx1, px, tx2, ty1, py, ty2)
+            return True
+    return False
+
 
 plt.axhline(y=0, linestyle='-', color='grey')
 plt.axvline(x=0, linestyle='-', color='grey')
@@ -40,12 +59,17 @@ while done == False:
     if done == True:
         print('Target area reached')
 
+    beyond = checkIfBeyondTarget()
+    if beyond == True:
+        done = True
+        print('Target missed')
+
     if vx != 0:
         if vx > 0:
             vx -= 1
         else:
             vx += 1
-    vy-=1
+    vy -= 1
 
 plt.grid()
 plt.show()
